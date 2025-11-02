@@ -49,7 +49,7 @@ class libmotorRecipe(ConanFile):
     def generate(self):
         deps = CMakeDeps(self)
         deps.generate()
-        tc = CMakeToolchain(self)
+        tc = CMakeToolchain(self, generator = "Ninja")
 
         # add project metadata to cmake
         tc.cache_variables["CONAN_PROJECT_NAME"] = str(self.name)
