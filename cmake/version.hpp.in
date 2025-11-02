@@ -1,0 +1,16 @@
+/**
+ * @file version.hpp
+ * @brief template for version info on project
+ */
+ 
+
+#pragma once
+
+#include <string_view>
+
+namespace version{
+
+constexpr static inline std::string_view version = "@CONAN_PROJECT_VERSION@";
+constexpr static inline std::string_view hash = "@CONAN_PROJECT_GIT_HASH@";
+
+}
