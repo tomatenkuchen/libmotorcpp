@@ -1,0 +1,60 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "config debug",
+			"command": "~/.venv/pydev/bin/conan",
+			"args": [
+				"build",
+				".",
+				"-s",
+				"build_type=Debug",
+				"-b=missing"
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "conan debug build command",
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "cppbuild",
+			"label": "conan create",
+			"command": "~/.venv/pydev/bin/conan",
+			"args": [
+				"create",
+				".",
+				"-b=missing"
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "conan create default",
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+		},
+		{
+			"type": "cppbuild",
+			"label": "build debug",
+			"command": "cmake",
+			"args": [
+				"--build",
+				"build/Debug"
+			],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "conan debug build command",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+		},
+	]
+}
