@@ -20,38 +20,38 @@
 namespace units = mp_units::angular::unit_symbols;
 using namespace mp_units;
 
-namespace bsp {
-
-inline constexpr struct radspeed final
-    : named_unit<"", mag<1> * angular::unit_symbols::rad / si::second> {};
-
-inline constexpr struct radacceleration final
-    : named_unit<"", mag<1> * radspeed / si::second> {};
+namespace bsp
+{
 
 constexpr auto sector_size = std::numbers::pi / 3 * units::rad;
 
-struct Motor {
-  enum class Rotation {
-    cw,
-    ccw,
-  };
+struct Motor
+{
+    enum class Rotation
+    {
+        cw,
+        ccw,
+    };
 
-  struct State {
-    quantity<angular::unit_symbols::rad, float> position;
-    radspeed speed;
-    radacceleration acceleration;
-  };
+    using radspeed = (angular::unit_symbols::rad / si::second);
+    using radacceleration = radspeed / si::second;
 
-  State state;
-  quantity<si::second, float> hall_isr_timestamp;
-  int8_t last_sector;
+    struct State
+    {
+        quantity<angular::unit_symbols::rad, float> position;
+        quantity<radspeed, float> speed;
+        quantity<radacceleration, float> acceleration;
+    };
 
-  void interrupt_handler(quantity<si::second, float> system_time,
-                         int8_t new_sector);
+    State state;
+    quantity<si::second, float> hall_isr_timestamp;
+    int8_t last_sector;
 
-  State get_motor_state(quantity<si::second, float> system_time);
+    void interrupt_handler(quantity<si::second, float> system_time, int8_t new_sector);
 
-  Rotation get_rotation_direction(int8_t new_sector);
+    State get_motor_state(quantity<si::second, float> system_time);
+
+    Rotation get_rotation_direction(int8_t new_sector);
 };
 
 } // namespace bsp
