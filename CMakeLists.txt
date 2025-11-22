@@ -21,7 +21,7 @@ find_package(mp-units REQUIRED)
 find_program(CMAKE_CXX_CPPCHECK cppcheck REQUIRED)
 list(
   APPEND CMAKE_CXX_CPPCHECK
-    "--enable=warning,style"
+    "--enable=all"
     "--cppcheck-build-dir=${CMAKE_BINARY_DIR}"
 )
 
