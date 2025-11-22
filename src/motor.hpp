@@ -33,14 +33,14 @@ struct Motor
         ccw,
     };
 
-    using radspeed = (angular::unit_symbols::rad / si::second);
-    using radacceleration = radspeed / si::second;
+    using radspeed = decltype(units::rad / si::second);
+    using radacceleration = decltype(units::rad / (si::second * si::second));
 
     struct State
     {
-        quantity<angular::unit_symbols::rad, float> position;
-        quantity<radspeed, float> speed;
-        quantity<radacceleration, float> acceleration;
+        quantity<units::rad, float> position;
+        // quantity<radspeed, float> speed;
+        // quantity<radacceleration, float> acceleration;
     };
 
     State state;
