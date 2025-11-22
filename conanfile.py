@@ -80,5 +80,6 @@ class libmotorRecipe(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["libmotor"]
+        self.cpp_info.libs = [self.name]
+        self.cpp_info.requires = ["mp-units::mp-units"]
 
