@@ -26,8 +26,6 @@ list(
 
 ###############################################################################
 # test executable definition
-add_subdirectory(src)
-
 add_executable(tests 
   src/tests.cpp
 )

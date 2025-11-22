@@ -29,4 +29,3 @@ list(
 # embedded executable definition
 add_subdirectory(src)
 
-install(TARGETS ${CONAN_PROJECT_NAME})

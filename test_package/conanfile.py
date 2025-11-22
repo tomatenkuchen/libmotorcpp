@@ -14,7 +14,6 @@ class libmotorTestConan(ConanFile):
         self.tool_requires("cppcheck/2.18.3")
         self.test_requires("catch2/3.11.0")
         self.requires(self.tested_reference_str)
-        self.requires("mp-units/2.4.0")
 
     def generate(self):
         deps = CMakeDeps(self)

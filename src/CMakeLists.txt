@@ -29,3 +29,11 @@ target_compile_options(${CONAN_PROJECT_NAME}
     -Werror
 )
 
+# necessary to make cmake install headers with the package
+file(GLOB public_headers "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
+set_target_properties(${CONAN_PROJECT_NAME}
+  PROPERTIES
+    PUBLIC_HEADER "${public_headers}" 
+)
+
+install(TARGETS ${CONAN_PROJECT_NAME})

@@ -24,6 +24,9 @@ class libmotorRecipe(ConanFile):
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*", "include/*"
 
+    # git hash for version identification
+    hash = None
+
     def set_version(self):
         git = Git(self, self.recipe_folder)
         self.version = git.run("describe --tags").split('-')[0]
