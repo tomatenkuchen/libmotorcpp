@@ -23,7 +23,7 @@ using namespace mp_units;
 namespace motor
 {
 
-constexpr float sector_size = std::numbers::pi / 3 * units::rad;
+constexpr auto sector_size = static_cast<float>(std::numbers::pi) / 3 * units::rad;
 
 struct Motor
 {
