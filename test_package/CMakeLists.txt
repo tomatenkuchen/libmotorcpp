@@ -15,6 +15,7 @@ project(test-package
 
 find_package(libmotor CONFIG REQUIRED)
 find_package(Catch2 REQUIRED)
+find_package(mp-units CONFIG REQUIRED)
 
 # cppcheck 
 find_program(CMAKE_CXX_CPPCHECK cppcheck REQUIRED)
@@ -22,6 +23,8 @@ list(
   APPEND CMAKE_CXX_CPPCHECK
     "--enable=all"
     "--cppcheck-build-dir=${CMAKE_BINARY_DIR}"
+    "--suppress=missingIncludeSystem"
+    "--suppress=missingInclude"
 )
 
 ###############################################################################
@@ -33,4 +36,13 @@ target_link_libraries(tests
   PRIVATE 
     libmotor::libmotor
     Catch2::Catch2WithMain
+    mp-units::mp-units
+)
+
+###############################################################################
+# cmake test definition
+include(CTest)
+add_test(
+  NAME tests 
+  COMMAND tests
 )

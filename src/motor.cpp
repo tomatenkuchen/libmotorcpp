@@ -8,8 +8,15 @@
 
 using namespace mp_units;
 
-namespace bsp
+namespace motor
 {
+
+Motor::Motor(State initial_state, quantity<si::second, float> isr_timestamp =, int8_t initial_sector)
+    : state(initial_state),
+      hall_isr_timestamp(isr_timestamp),
+      last_sector(initial_sector)
+{
+}
 
 void Motor::hall_interrupt_handler(quantity<si::second, float> system_time, int8_t new_sector)
 {
@@ -55,4 +62,4 @@ Motor::Rotation Motor::get_rotation_direction(int8_t new_sector)
     return new_sector - last_sector > 0 ? Rotation::cw : Rotation::ccw;
 }
 
-} // namespace bsp
+} // namespace motor
