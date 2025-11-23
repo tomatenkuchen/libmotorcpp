@@ -23,7 +23,7 @@ using namespace mp_units;
 namespace motor
 {
 
-constexpr auto sector_size = std::numbers::pi / 3 * units::rad;
+constexpr float sector_size = std::numbers::pi / 3 * units::rad;
 
 struct Motor
 {
@@ -52,7 +52,14 @@ struct Motor
      * @param isr_timestamp interrupt time of last hall sensor interrupt
      * @param initial_sector last known motor sector postion
      */
-    Motor(State initial_state, quantity<si::second, float> isr_timestamp, int8_t initial_sector);
+    Motor(State initial_state =
+              State{
+                  .position = 0.0f * units::rad,
+                  .speed = 0.0f * radspeed,
+                  .acceleration = 0.0f * radacceleration,
+
+              },
+          quantity<si::second, float> isr_timestamp = 0. * si::second, int8_t initial_sector = 1);
 
     /**
      * @brief interrupt handler to be called when hall sensor generate new input

@@ -11,7 +11,7 @@ using namespace mp_units;
 namespace motor
 {
 
-Motor::Motor(State initial_state, quantity<si::second, float> isr_timestamp =, int8_t initial_sector)
+Motor::Motor(State initial_state, quantity<si::second, float> isr_timestamp, int8_t initial_sector)
     : state(initial_state),
       hall_isr_timestamp(isr_timestamp),
       last_sector(initial_sector)
