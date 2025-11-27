@@ -28,9 +28,59 @@ void Motor::hall_interrupt_handler(quantity<si::second, float> system_time, int8
 
     auto const new_speed = (sector_size / delta_t) * (dir == Rotation::ccw ? -1.f : 1.f);
 
-    state.position = (new_sector - 1) * sector_size;
     state.acceleration = (new_speed - state.speed) / delta_t;
     state.speed = new_speed;
+    hall_isr_timestamp = system_time;
+
+    if (dir == Rotation::cw)
+    {
+        switch (new_sector)
+        {
+        case 1:
+            state.position = sector_size * 5.5;
+            break;
+        case 2:
+            state.position = sector_size * 0.5;
+            break;
+        case 3:
+            state.position = sector_size * 1.5;
+            break;
+        case 4:
+            state.position = sector_size * 2.5;
+            break;
+        case 5:
+            state.position = sector_size * 3.5;
+            break;
+        case 6:
+            state.position = sector_size * 4.5;
+            break;
+        }
+    }
+    else
+    {
+        switch (new_sector)
+        {
+        case 1:
+            state.position = sector_size * 0.5;
+            break;
+        case 2:
+            state.position = sector_size * 1.5;
+            break;
+        case 3:
+            state.position = sector_size * 2.5;
+            break;
+        case 4:
+            state.position = sector_size * 3.5;
+            break;
+        case 5:
+            state.position = sector_size * 4.5;
+            break;
+        case 6:
+            state.position = sector_size * 5.5;
+            break;
+        }
+    }
+
     last_sector = new_sector;
 };
 
