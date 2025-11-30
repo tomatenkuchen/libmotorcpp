@@ -23,6 +23,19 @@ conan build . -b=missing
 conan build . -b=missing -pr=my-microcontroler-profile
 ```
 
+## units
+
+to help with robust implementations, safe types and a healily paraniod compiler I use mp-units as a
+units library for all physical units. It's my first attempt to use them. If you find a better way
+to build this, please notify me.
+
+most notably, you will see functions with arguments that hold
+```c++
+quantity<si::ampere, float> some_electrical_current
+```
+
+instead of a pure float. this helps avoid errors with values.
+
 ## usage
 
 motor control algorithms usually work in dq transformed space to ease yourself from producing
