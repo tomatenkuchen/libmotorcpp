@@ -34,51 +34,18 @@ void Motor::hall_interrupt_handler(quantity<si::second, float> system_time, int8
 
     if (dir == Rotation::cw)
     {
-        switch (new_sector)
+        if (new_sector > 1)
         {
-        case 1:
-            state.position = sector_size * 5.5;
-            break;
-        case 2:
-            state.position = sector_size * 0.5;
-            break;
-        case 3:
-            state.position = sector_size * 1.5;
-            break;
-        case 4:
-            state.position = sector_size * 2.5;
-            break;
-        case 5:
-            state.position = sector_size * 3.5;
-            break;
-        case 6:
-            state.position = sector_size * 4.5;
-            break;
+            state.position = sector_size * (new_sector - 1.5f);
+        }
+        else
+        {
+            state.position = sector_size * 5.5f;
         }
     }
     else
     {
-        switch (new_sector)
-        {
-        case 1:
-            state.position = sector_size * 0.5;
-            break;
-        case 2:
-            state.position = sector_size * 1.5;
-            break;
-        case 3:
-            state.position = sector_size * 2.5;
-            break;
-        case 4:
-            state.position = sector_size * 3.5;
-            break;
-        case 5:
-            state.position = sector_size * 4.5;
-            break;
-        case 6:
-            state.position = sector_size * 5.5;
-            break;
-        }
+        state.position = sector_size * (new_sector - 0.5f);
     }
 
     last_sector = new_sector;
@@ -89,10 +56,13 @@ Motor::State Motor::get_motor_state(quantity<si::second, float> system_time)
     auto const delta_t = system_time - hall_isr_timestamp;
 
     State current_state = {
-        .position = state.position + state.speed * delta_t,
-        .speed = state.speed + state.acceleration * delta_t,
+        .position = 0.f * angular::radian,
+        .speed = 0.f * radspeed,
         .acceleration = state.acceleration,
     };
+
+    current_state.speed = state.speed + state.acceleration * delta_t;
+    current_state.position = state.position + state.speed * delta_t;
 
     return current_state;
 }
