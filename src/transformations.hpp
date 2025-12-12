@@ -178,7 +178,7 @@ template <typename T> ABC<T> ab_to_abc(AB<T> ab)
     ABC<T> abc = {
         .a = ab.a,
         .b = ab.a * -0.5f + sqrt3 * ab.b * 0.5f,
-        .c = ab.a * -0.5f + sqrt3 * -0.5f * ab.b,
+        .c = ab.a * -0.5f + sqrt3 * ab.b * -0.5f,
     };
 
     return abc;

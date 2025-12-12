@@ -56,12 +56,30 @@ TEST_CASE("Motor state update on interrupt", "[motor]")
 
 TEST_CASE("transformation tests", "[trafo]")
 {
-    motor::trans::AB<quantity<si::volt, float>> ab = {
-        .a = 1.f * si::volt,
-        .b = 0.f * si::volt,
+    // to test the transformations, a dq to abc and backwards analysis should suffice, since all steps on the way are
+    // included
+    motor::trans::DQ<quantity<si::volt, float>> dq = {
+        .d = 1.f * si::volt,
+        .q = 0.f * si::volt,
     };
 
-    auto abc = motor::trans::ab_to_abc(ab);
+    // the 3 phase equivalent of the dq input are 3 sinus signals with 120° phase shift
+    quantity<angular::radian, float> const full_circle = 2.f * std::numbers::pi * angular::radian;
+    quantity<angular::radian, float> const step = 0.1f * std::numbers::pi * angular::radian;
+    quantity<angular::radian, float> const _120deg = full_circle / 3;
+    for (quantity<angular::radian, float> angle = 0.f * angular::radian; angle < full_circle; angle += step)
+    {
+        // transform
+        auto const abc = dq.to_abc(angle);
 
-    REQUIRE(true);
+        // calculate reference voltages
+        auto const v_phase_u = std::cos(angle.numerical_value_in(angular::radian));
+        auto const v_phase_v = std::cos((angle + _120deg).numerical_value_in(angular::radian));
+        auto const v_phase_w = std::cos((angle + _120deg * 2).numerical_value_in(angular::radian));
+
+        // check
+        REQUIRE_THAT(abc.a.numerical_value_in(si::volt), Catch::Matchers::WithinRel(v_phase_u, 0.01f));
+        REQUIRE_THAT(abc.b.numerical_value_in(si::volt), Catch::Matchers::WithinRel(v_phase_v, 0.01f));
+        REQUIRE_THAT(abc.c.numerical_value_in(si::volt), Catch::Matchers::WithinRel(v_phase_w, 0.01f));
+    }
 }
