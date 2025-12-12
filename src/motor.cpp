@@ -62,7 +62,7 @@ Motor::State Motor::get_motor_state(quantity<si::second, float> system_time)
     };
 
     current_state.speed = state.speed + state.acceleration * delta_t;
-    current_state.position = state.position + state.speed * delta_t;
+    current_state.position = state.position + current_state.speed * delta_t;
 
     return current_state;
 }
