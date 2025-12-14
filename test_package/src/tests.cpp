@@ -4,6 +4,7 @@
 #include "transformations.hpp"
 #include <mp-units/systems/angular/units.h>
 #include <mp-units/systems/si.h>
+#include <print>
 
 using namespace mp_units;
 
@@ -74,8 +75,10 @@ TEST_CASE("transformation tests", "[trafo]")
 
         // calculate reference voltages
         auto const v_phase_u = std::cos(angle.numerical_value_in(angular::radian));
-        auto const v_phase_v = std::cos((angle + _120deg).numerical_value_in(angular::radian));
-        auto const v_phase_w = std::cos((angle + _120deg * 2).numerical_value_in(angular::radian));
+        auto const v_phase_v = std::cos((angle - _120deg).numerical_value_in(angular::radian));
+        auto const v_phase_w = std::cos((angle - _120deg * 2).numerical_value_in(angular::radian));
+
+        std::print("u: {}V, v: {}V, w: {}V\n", v_phase_u, v_phase_v, v_phase_w);
 
         // check
         REQUIRE_THAT(abc.a.numerical_value_in(si::volt), Catch::Matchers::WithinRel(v_phase_u, 0.01f));
