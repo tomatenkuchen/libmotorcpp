@@ -6,7 +6,7 @@ from pathlib import Path
 
 class libmotorRecipe(ConanFile):
     name = "libmotor"
-    version = "0.0.0"
+    version = "0.0.1"
     package_type = "library"
 
     # Optional metadata
